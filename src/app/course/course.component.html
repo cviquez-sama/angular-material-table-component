@@ -1,0 +1,94 @@
+<div class="course">
+
+    <h2>Table</h2>
+
+    <mat-form-field>
+
+        <input matInput placeholder="Search lessons" #input>
+
+    </mat-form-field>
+
+    <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+
+        <mat-spinner></mat-spinner>
+
+    </div>
+
+    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource"
+               matSort matSortActive="seqNo" matSortDirection="asc" matSortDisableClear>
+
+        <ng-container matColumnDef="seqNo">
+
+            <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+
+
+            <mat-cell *matCellDef="let lesson" (click) = "click(lesson)">
+                {{lesson.seqNo}}
+                <a href="https://www.samasource.com/global-locations">Lola</a>
+                <mat-icon>person</mat-icon>
+            </mat-cell>
+
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+
+            <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+
+            <mat-cell class="description-cell"
+                      *matCellDef="let lesson">{{lesson.description}}</mat-cell>
+
+        </ng-container>
+
+        <ng-container class="duration-container" matColumnDef="duration">
+
+            <mat-header-cell class="duration-header" *matHeaderCellDef>Duration</mat-header-cell>
+
+            <mat-cell class="duration-cell"
+                      *matCellDef="let lesson">{{lesson.duration}}</mat-cell>
+
+        </ng-container>
+
+        <ng-container matColumnDef="dots">
+             
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+
+            <mat-cell 
+                      *matCellDef="let lesson">{{lesson.dot}}
+                      <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{lesson: 'item'}">
+                        <mat-icon>more_vert</mat-icon>
+                      </button>
+            </mat-cell>
+
+        </ng-container>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <ng-template let-lesson ="lesson" matMenuContent>
+                <button mat-menu-item>{{lesson}}</button>
+            </ng-template>
+        </mat-menu>
+
+        
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <!-- mat row define the cells that are going to be displayed
+             let row is the variable that the row export
+             row contain data of a given row. Useful for (click) event and know the exact row
+             In this cell is going to be for each column per row
+             (cell x column for all rows)
+         -->
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    </mat-table>
+
+
+    <mat-paginator [length]="course?.lessonsCount" [pageSize]="3"
+                   [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+
+</div>
+
+
+
+
+
+
